@@ -9,8 +9,12 @@ cargo run -- write-to-file --filepath test-output/hello.txt --content "hello wor
 
 Grid
 ```
-cargo run -- grid --filepath test-images/dog.png --rows 3 --columns 4
+cargo run -- grid --openfilepath test-images/dog1.png --rows 2 --columns 2 --savefilepath test-output/dog_grid.png
 ```
+
+````
+cargo run -- grid --openfilepath test-images/dog1.png --rows 2 --columns 2 --savefilepath test-output/dog_grid.png
+````
 
 Image Details
 ```

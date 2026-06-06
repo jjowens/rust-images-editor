@@ -14,9 +14,12 @@ struct Args {
 #[derive(Subcommand)]
 enum Commands {
     Grid {
-        /// Image Filepath
+        /// Open image Filepath
         #[arg(long)]
-        filepath: String,
+        openfilepath: String,
+        /// Save image Filepath
+        #[arg(long)]
+        savefilepath: String,
         /// Number of rows to split image into
         #[arg(long, default_value_t = 0)]
         rows: u32,
@@ -54,8 +57,8 @@ fn main() {
     let args = Args::parse();
 
     match args.command {
-        Some(Commands::Grid { filepath, rows, columns }) => {
-            grid_service(&filepath, &rows, &columns);
+        Some(Commands::Grid { openfilepath, savefilepath, rows, columns }) => {
+            grid_service(&openfilepath, &savefilepath, &rows, &columns);
         },
         Some(Commands::WriteToFile { filepath, content }) => {
             println!("Writing to file");
