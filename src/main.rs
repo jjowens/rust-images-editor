@@ -25,8 +25,9 @@ enum Commands {
     WriteToFile {
         #[arg(long)]
         filepath: String,
+        #[arg(long)]
+        content: String,
     }
-
 }
 
 fn main() {
@@ -36,10 +37,13 @@ fn main() {
 
     match args.command {
         Some(Commands::Grid { filepath, rows, columns }) => {
-
+            println!("Filepath {}", filepath);
+            println!("Rows: {}", rows);
+            println!("Columns: {}", columns)
         },
-        Some(Commands::WriteToFile { filepath }) => {
-            let _ = write_to_file(filepath, "hello".to_string());
+        Some(Commands::WriteToFile { filepath, content }) => {
+            println!("Writing to file");
+            let _ = write_to_file(filepath, content);
         },
         None => {
             std::process::exit(1);
