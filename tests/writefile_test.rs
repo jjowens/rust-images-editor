@@ -1,12 +1,11 @@
-use assert_cmd::cargo::*; // Import cargo_bin_cmd! macro and methods
-//use predicates::prelude::*; // Used for writing assertions
 #[cfg(test)]
 mod grid_test {
-    use assert_cmd::{cargo_bin_cmd, Command};
+    use assert_cmd::Command;
+    const APP_NAME: &str = "rustimageseditor";
 
     #[test]
     fn should_write_to_file() -> Result<(), Box<dyn std::error::Error>> {
-        let mut cmd = Command::cargo_bin("rustimageseditor").unwrap();
+        let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
 
         cmd.arg("write-to-file")
             .arg("--filepath").arg("test-output/hello.txt")
