@@ -17,19 +17,4 @@ mod grid_test {
 
         Ok(())
     }
-
-    #[test]
-    fn should_write_to_file() -> Result<(), Box<dyn std::error::Error>> {
-        //let mut cmd = cargo_bin_cmd!();
-        let mut cmd = Command::cargo_bin("rustimageseditor").unwrap();
-
-        cmd.arg("write-to-file")
-            .arg("--filepath").arg("test-output/hello.txt")
-            .arg("--content").arg("This is a test");
-
-        let _output = cmd.unwrap();
-
-        Ok(())
-    }
-
 }

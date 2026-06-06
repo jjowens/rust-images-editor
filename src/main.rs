@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use std::fs::File;
 use std::io::prelude::*;
+use image::GenericImageView;
 
 #[derive(Parser)]
 #[command(name = "myapp", author, version, about, long_about = None)]
@@ -27,6 +28,10 @@ enum Commands {
         filepath: String,
         #[arg(long)]
         content: String,
+    },
+    ImageDetails {
+        #[arg(long)]
+        filepath: String
     }
 }
 
@@ -45,6 +50,9 @@ fn main() {
             println!("Writing to file");
             let _ = write_to_file(filepath, content);
         },
+        Some(Commands::ImageDetails { filepath }) => {
+            get_image_details(filepath)
+        },
         None => {
             std::process::exit(1);
         }
@@ -55,4 +63,18 @@ fn write_to_file(filepath: String, content: String)  -> std::io::Result<()> {
     let mut file = File::create(filepath)?;
     file.write_all(content.as_bytes())?;
     Ok(())
+}
+
+fn get_image_details(filepath: String) {
+    println!("Get {} image details", filepath);
+
+    // Use the open function to load an image from a Path.
+    // `open` returns a `DynamicImage` on success.
+    let img = image::open(filepath).unwrap();
+
+    // The dimensions method returns the images width and height.
+    println!("dimensions {:?}", img.dimensions());
+
+    // The color method returns the image's `ColorType`.
+    println!("{:?}", img.color());
 }
