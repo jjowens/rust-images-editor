@@ -1,8 +1,6 @@
-use assert_cmd::cargo::*; // Import cargo_bin_cmd! macro and methods
-//use predicates::prelude::*; // Used for writing assertions
 #[cfg(test)]
 mod getimagedetails_test {
-    use assert_cmd::{cargo_bin_cmd, Command};
+    use assert_cmd::Command;
     const APP_NAME: &str = "rustimageseditor";
 
     #[test]

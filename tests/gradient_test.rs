@@ -1,4 +1,3 @@
-use assert_cmd::cargo::*; // Import cargo_bin_cmd! macro and methods
 #[cfg(test)]
 mod gradient_test {
     use assert_cmd::Command;
