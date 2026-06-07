@@ -17,9 +17,12 @@ enum Commands {
         /// Open image Filepath
         #[arg(long)]
         openfilepath: String,
-        /// Save image Filepath
+        /// Save image to directory
         #[arg(long)]
-        savefilepath: String,
+        savedirectory: String,
+        /// File name to prefix
+        #[arg(long)]
+        savefilename: String,
         /// Number of rows to split image into
         #[arg(long, default_value_t = 0)]
         rows: u32,
@@ -57,8 +60,8 @@ fn main() {
     let args = Args::parse();
 
     match args.command {
-        Some(Commands::Grid { openfilepath, savefilepath, rows, columns }) => {
-            grid_service(&openfilepath, &savefilepath, &rows, &columns);
+        Some(Commands::Grid { openfilepath, savedirectory, savefilename, rows, columns }) => {
+            grid_service(&openfilepath, &savedirectory, &savefilename, &rows, &columns);
         },
         Some(Commands::WriteToFile { filepath, content }) => {
             println!("Writing to file");
