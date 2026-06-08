@@ -61,7 +61,7 @@ fn main() {
 
     match args.command {
         Some(Commands::Grid { openfilepath, savedirectory, savefilename, rows, columns }) => {
-            grid_service(&openfilepath, &savedirectory, &savefilename, &rows, &columns);
+            grid_service(&openfilepath, &savedirectory, &savefilename, rows, columns);
         },
         Some(Commands::WriteToFile { filepath, content }) => {
             println!("Writing to file");

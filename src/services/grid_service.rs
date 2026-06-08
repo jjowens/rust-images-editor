@@ -1,7 +1,7 @@
 use image::{GenericImage, ImageFormat};
 use image::flat::Error;
 
-pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, rows: &u32, columns: &u32) {
+pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, rows: u32, columns: u32) {
     println!("- Creating grid image");
     let mut img = image::open(open_file_path).unwrap();
 
@@ -13,9 +13,9 @@ pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, 
     let mut x: u32 = 0;
     let mut y: u32 = 0;
 
-    println!("Image dimension: width: {:?}, height: {:?}", image_width, image_height);
-    println!("Inital co-ordinates x: {:?}, y: {:?}", x, y);
-    println!("Cell dimensions width: {:?}, height: {:?}", grid_cell_width, grid_cell_height);
+    println!("- Image dimension: width: {:?}, height: {:?}", image_width, image_height);
+    println!("- Initial co-ordinates x: {:?}, y: {:?}", x, y);
+    println!("- Grid cell dimensions width: {:?}, height: {:?}", grid_cell_width, grid_cell_height);
     for row_number in 1..=10 {
         for column_number in 1..=10 {
             let new_file_name = format!("{}-{}-{}.png", save_file_name, row_number, column_number);
@@ -25,10 +25,12 @@ pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, 
             let temp_cell_height = get_final_size(y,grid_cell_height, image_height);
 
             println!("New co-ordinates x: {:?},y: {:?}", x, y);
+            println!("New co-ordinates x: {:?},y: {:?}", x, y);
+            println!("Temp dimensions width: {:?}, height: {:?}", temp_cell_width, temp_cell_height);
 
             //img.sub_image(x,y, grid_cell_width,grid_cell_height).to_image().save_with_format(full_save_path, ImageFormat::Png).unwrap();
             let result = || -> Result<(), Error> {
-                img.sub_image(x,y, temp_cell_width,temp_cell_height).to_image().save_with_format(full_save_path, ImageFormat::Png).unwrap();
+                img.sub_image(x,y, temp_cell_width, temp_cell_height).to_image().save_with_format(full_save_path, ImageFormat::Png).unwrap();
                 Ok(())
             };
 
@@ -45,6 +47,10 @@ pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, 
         }
         y += grid_cell_height;
         x = 0;
+
+        if y >= image_height {
+            break;
+        }
     }
     //img.sub_image(0,90, grid_cell_width,grid_cell_height).to_image().save_with_format(save_file_path, ImageFormat::Png).unwrap()
 }
