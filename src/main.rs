@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use rustimageseditor::services::formatimage_service::formatimage_service;
 use rustimageseditor::services::grid_service::grid_service;
 use rustimageseditor::services::imagedetails_service::imagedetails_service;
 use rustimageseditor::services::gradient_service::gradient_service;
@@ -51,7 +52,18 @@ enum Commands {
         height: u32,
         #[arg(long, default_value_t = 0.5)]
         transparency: f32
-    }
+    },
+    FormatImage {
+        /// Open image filepath
+        #[arg(long)]
+        openfilepath: String,
+        /// Save image filepath
+        #[arg(long)]
+        savefilepath: String,
+        // Set image type to save as
+        #[arg(long)]
+        imagetype: String
+    },
 }
 
 fn main() {
@@ -72,6 +84,9 @@ fn main() {
         },
         Some(Commands::Gradient { savefilepath, width, height, transparency  }) => {
             gradient_service(savefilepath.as_str(), width, height, transparency)
+        },
+        Some(Commands::FormatImage { openfilepath, savefilepath, imagetype }) => {
+            formatimage_service(&openfilepath, &savefilepath, &imagetype);
         },
         None => {
             std::process::exit(1);
