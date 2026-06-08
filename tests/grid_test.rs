@@ -5,8 +5,13 @@ mod grid_test {
     const APP_NAME: &str = "rustimageseditor";
 
     fn recreate_folder(directory_path: &str) -> std::io::Result<()> {
-        fs::remove_dir_all(directory_path)?;
-        fs::create_dir(directory_path)?;
+        if !fs::exists(directory_path)? {
+            fs::create_dir(directory_path)?;
+        } else {
+            fs::create_dir(directory_path)?;
+            fs::remove_dir_all(directory_path)?;
+        }
+
         Ok(())
     }
 
@@ -27,7 +32,7 @@ mod grid_test {
     }
 
     #[test]
-    fn create_large_number_of_slices_one_row() -> Result<(), Box<dyn std::error::Error>> {
+    fn create_10x1() -> Result<(), Box<dyn std::error::Error>> {
         let directory_output = "test-output/grid/10x1";
         let _ = recreate_folder(directory_output);
 
@@ -36,6 +41,25 @@ mod grid_test {
         cmd.arg("grid")
             .arg("--rows").arg("10")
             .arg("--columns").arg("1")
+            .arg("--openfilepath").arg("test-images/dog1.png")
+            .arg("--savedirectory").arg(directory_output)
+            .arg("--savefilename").arg("dog10x1");
+
+        let _output = cmd.unwrap();
+
+        Ok(())
+    }
+
+    #[test]
+    fn create_20x20() -> Result<(), Box<dyn std::error::Error>> {
+        let directory_output = "test-output/grid/20x20";
+        let _ = recreate_folder(directory_output);
+
+        let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
+
+        cmd.arg("grid")
+            .arg("--rows").arg("20")
+            .arg("--columns").arg("20")
             .arg("--openfilepath").arg("test-images/dog1.png")
             .arg("--savedirectory").arg(directory_output)
             .arg("--savefilename").arg("dog10x1");
