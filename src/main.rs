@@ -4,6 +4,7 @@ use rustimageseditor::services::grid_service::grid_service;
 use rustimageseditor::services::imagedetails_service::imagedetails_service;
 use rustimageseditor::services::gradient_service::gradient_service;
 use rustimageseditor::services::writetofile_service::writetofile_service;
+use rustimageseditor::services::createicon_service::createicon_service;
 
 #[derive(Parser)]
 #[command(name = "myapp", author, version, about, long_about = None)]
@@ -64,6 +65,17 @@ enum Commands {
         #[arg(long)]
         imagetype: String
     },
+    CreateIcon {
+        /// Open image Filepath
+        #[arg(long)]
+        openfilepath: String,
+        /// Save image to directory
+        #[arg(long)]
+        savedirectory: String,
+        /// File name to prefix. No extension required
+        #[arg(long)]
+        savefilename: String,
+    },
 }
 
 fn main() {
@@ -88,6 +100,9 @@ fn main() {
         Some(Commands::FormatImage { openfilepath, savefilepath, imagetype }) => {
             formatimage_service(&openfilepath, &savefilepath, &imagetype);
         },
+        Some(Commands::CreateIcon { openfilepath, savedirectory, savefilename }) => {
+            createicon_service(&openfilepath, &savedirectory, &savefilename);
+        }
         None => {
             std::process::exit(1);
         }
