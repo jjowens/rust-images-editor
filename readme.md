@@ -29,3 +29,12 @@ Gradient
 ```
 cargo run -- gradient --savefilepath test-output/gradient_test.png    
 ```
+
+Gradient-RGBA
+```
+cargo run -- gradient-rgba --savefilepath test-output/gradient_test.png --red 255 --green 0 --blue 0  --redy true --greeny false --bluey false
+```
+
+```
+cargo run -- gradient-rgba --savefilepath test-output/gradient_test.png --red 255  --redy true --greeny false --bluey false
+```

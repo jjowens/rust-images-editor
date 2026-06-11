@@ -5,6 +5,8 @@ use rustimageseditor::services::imagedetails_service::imagedetails_service;
 use rustimageseditor::services::gradient_service::gradient_service;
 use rustimageseditor::services::writetofile_service::writetofile_service;
 use rustimageseditor::services::createicon_service::createicon_service;
+use rustimageseditor::services::gradient_service::gradientrgba_service;
+use rustimageseditor::services::gradient_service::gradientrandom_service;
 
 #[derive(Parser)]
 #[command(name = "myapp", author, version, about, long_about = None)]
@@ -76,6 +78,51 @@ enum Commands {
         #[arg(long)]
         savefilename: String,
     },
+    /// Create gradient with RGB and alpha
+    GradientRgba {
+        /// Save file path for image
+        #[arg(long)]
+        savefilepath: String,
+        /// Number of rows to split image into
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Number of columns to split image into
+        #[arg(long, default_value_t = 100)]
+        height: u32,
+        /// Red value
+        #[arg(long, default_value_t = 0)]
+        red: u32,
+        /// Green value
+        #[arg(long, default_value_t = 0)]
+        green: u32,
+        /// Blue value
+        #[arg(long, default_value_t = 0)]
+        blue: u32,
+        /// Alpha value
+        #[arg(long, default_value_t = 255)]
+        alpha: u8,
+        /// Use y axis for Red colour to update pixel. Default is false
+        #[arg(long, default_value_t = false)]
+        redy: std::primitive::bool,
+        /// Use y axis for Green colour to update pixel. Default is false
+        #[arg(long, default_value_t = false)]
+        greeny:  std::primitive::bool,
+        /// Use y axis for Blue colour to update pixel. Default is true
+        #[arg(long, default_value_t = true)]
+        bluey:  std::primitive::bool,
+    },
+    /// Create gradient with random values for RGB and alpha
+    GradientRandom {
+        /// Save file path for image
+        #[arg(long)]
+        savefilepath: String,
+        /// Number of rows to split image into
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Number of columns to split image into
+        #[arg(long, default_value_t = 100)]
+        height: u32
+    }
 }
 
 fn main() {
@@ -102,7 +149,13 @@ fn main() {
         },
         Some(Commands::CreateIcon { openfilepath, savedirectory, savefilename }) => {
             createicon_service(&openfilepath, &savedirectory, &savefilename);
-        }
+        },
+        Some(Commands::GradientRgba { savefilepath, width, height, red, green, blue, alpha , redy   , greeny, bluey }) => {
+            gradientrgba_service(savefilepath.as_str(), width, height, red, green, blue, alpha, redy, greeny, bluey);
+        },
+        Some(Commands::GradientRandom { savefilepath, width, height }) => {
+            gradientrandom_service(savefilepath.as_str(), width, height);
+        },
         None => {
             std::process::exit(1);
         }
