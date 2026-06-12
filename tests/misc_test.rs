@@ -1,7 +1,6 @@
 #[cfg(test)]
 mod misc_test {
     use assert_cmd::Command;
-    use chrono::Local;
 
     const APP_NAME: &str = "rustimageseditor";
 
