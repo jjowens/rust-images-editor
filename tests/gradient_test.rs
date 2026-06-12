@@ -226,4 +226,36 @@ mod gradient_test {
         Ok(())
     }
 
+    #[test]
+    fn get_gradient_random_block() -> Result<(), Box<dyn std::error::Error>> {
+        let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
+        let dt = Local::now();
+
+        let save_file_path = format!("test-output/gradient-random/gradient_block_{}.png", dt.format("%Y%m%d%H%M"));
+        cmd.arg("gradient-block")
+            .arg("--savefilepath").arg(save_file_path)
+            .arg("--width").arg("200")
+            .arg("--height").arg("200");
+
+        let _output = cmd.unwrap();
+
+        Ok(())
+    }
+
+    #[test]
+    fn get_gradient_custom() -> Result<(), Box<dyn std::error::Error>> {
+        let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
+        let dt = Local::now();
+
+        let save_file_path = format!("test-output/gradient-random/gradient_block_{}.png", dt.format("%Y%m%d%H%M"));
+        cmd.arg("gradient-block")
+            .arg("--savefilepath").arg(save_file_path)
+            .arg("--width").arg("200")
+            .arg("--height").arg("200");
+
+        let _output = cmd.unwrap();
+
+        Ok(())
+    }
+
 }

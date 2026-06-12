@@ -2,11 +2,10 @@ use clap::{Parser, Subcommand};
 use rustimageseditor::services::formatimage_service::formatimage_service;
 use rustimageseditor::services::grid_service::grid_service;
 use rustimageseditor::services::imagedetails_service::imagedetails_service;
-use rustimageseditor::services::gradient_service::gradient_service;
 use rustimageseditor::services::writetofile_service::writetofile_service;
 use rustimageseditor::services::createicon_service::createicon_service;
-use rustimageseditor::services::gradient_service::gradientrgba_service;
-use rustimageseditor::services::gradient_service::gradientrandom_service;
+use rustimageseditor::services::gradient_service::{gradientrandom_service, gradient_service, gradientblock_service, gradientrgba_service};
+use rustimageseditor::services::misc_service::misc_custom_service;
 
 #[derive(Parser)]
 #[command(name = "myapp", author, version, about, long_about = None)]
@@ -122,6 +121,30 @@ enum Commands {
         /// Number of columns to split image into
         #[arg(long, default_value_t = 100)]
         height: u32
+    },
+    /// Create gradient with blocks of colours
+    GradientBlock {
+        /// Save file path for image
+        #[arg(long)]
+        savefilepath: String,
+        /// Number of rows to split image into
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Number of columns to split image into
+        #[arg(long, default_value_t = 100)]
+        height: u32
+    },
+    /// Custom. WIP
+    MiscCustom {
+        /// Save file path for image
+        #[arg(long)]
+        savefilepath: String,
+        /// Number of rows to split image into
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Number of columns to split image into
+        #[arg(long, default_value_t = 100)]
+        height: u32
     }
 }
 
@@ -155,6 +178,12 @@ fn main() {
         },
         Some(Commands::GradientRandom { savefilepath, width, height }) => {
             gradientrandom_service(savefilepath.as_str(), width, height);
+        },
+        Some(Commands::GradientBlock { savefilepath, width, height }) => {
+            gradientblock_service(savefilepath.as_str(), width, height);
+        },
+        Some(Commands::MiscCustom { savefilepath, width, height }) => {
+            misc_custom_service(savefilepath.as_str(), width, height);
         },
         None => {
             std::process::exit(1);
