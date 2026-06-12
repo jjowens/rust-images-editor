@@ -60,3 +60,40 @@ pub fn gradientrandom_service(save_file_path: &str, width: u32, height: u32) {
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
 }
+
+pub fn gradientblock_service(save_file_path: &str, width: u32, height: u32) {
+    let mut imgbuf = image::ImageBuffer::new(width, height);
+
+    let x_half = width / 2;
+    let y_half = height/ 2;
+
+    // Iterate over the coordinates and pixels of the image
+    for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
+        let mut r = 0u8;
+        let mut g = 0u8;
+        let mut b = 0u8;
+        let a = 255;
+
+        if x <= x_half && y <= y_half {
+            r = 255u8;
+        }
+
+        if x > x_half && y <= y_half {
+            g = 255u8;
+        }
+
+        if x > x_half && y > y_half {
+            b = 255u8;
+        }
+
+        if x < x_half && y > y_half {
+            r = 255u8;
+            b = 255u8;
+        }
+
+        *pixel = image::Rgba([r, g, b, a]);
+    }
+
+    // Save the image as “fractal.png”, the format is deduced from the path
+    imgbuf.save(save_file_path).unwrap();
+}
