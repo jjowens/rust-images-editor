@@ -15,56 +15,39 @@ mod grid_test {
         Ok(())
     }
 
-    #[test]
-    fn should_create_2x2() -> Result<(), Box<dyn std::error::Error>> {
+    fn create_grid_image(rows: &str, columns: &str, open_file_path: &str, save_directory_path: &str, save_file_name: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let _ = recreate_folder(save_directory_path);
         let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
 
         cmd.arg("grid")
-            .arg("--rows").arg("2")
-            .arg("--columns").arg("2")
-            .arg("--openfilepath").arg("test-images/dog1.png")
-            .arg("--savedirectory").arg("test-output")
-            .arg("--savefilename").arg("dog2x2");
+            .arg("--rows").arg(rows)
+            .arg("--columns").arg(columns)
+            .arg("--openfilepath").arg(open_file_path)
+            .arg("--savedirectory").arg(save_directory_path)
+            .arg("--savefilename").arg(save_file_name);
 
         let _output = cmd.unwrap();
+
+        Ok(())
+    }
+
+    #[test]
+    fn should_create_2x2() -> Result<(), Box<dyn std::error::Error>> {
+        let _ = create_grid_image("2", "2", "test-images/dog1.png", "test-output/grid/2x2", "dog2x2");
 
         Ok(())
     }
 
     #[test]
     fn create_10x1() -> Result<(), Box<dyn std::error::Error>> {
-        let directory_output = "test-output/grid/10x1";
-        let _ = recreate_folder(directory_output);
-
-        let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
-
-        cmd.arg("grid")
-            .arg("--rows").arg("10")
-            .arg("--columns").arg("1")
-            .arg("--openfilepath").arg("test-images/dog1.png")
-            .arg("--savedirectory").arg(directory_output)
-            .arg("--savefilename").arg("dog10x1");
-
-        let _output = cmd.unwrap();
+        let _ = create_grid_image("10", "1", "test-images/dog1.png", "test-output/grid/10x1", "dog10x1");
 
         Ok(())
     }
 
     #[test]
     fn create_20x20() -> Result<(), Box<dyn std::error::Error>> {
-        let directory_output = "test-output/grid/20x20";
-        let _ = recreate_folder(directory_output);
-
-        let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
-
-        cmd.arg("grid")
-            .arg("--rows").arg("20")
-            .arg("--columns").arg("20")
-            .arg("--openfilepath").arg("test-images/dog1.png")
-            .arg("--savedirectory").arg(directory_output)
-            .arg("--savefilename").arg("dog10x1");
-
-        let _output = cmd.unwrap();
+        let _ = create_grid_image("20", "20", "test-images/dog1.png", "test-output/grid/20x20", "dog20x20");
 
         Ok(())
     }
