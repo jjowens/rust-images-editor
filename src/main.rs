@@ -16,14 +16,111 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Commands {
-    Grid {
-        /// Open image Filepath
+    /// Create an icon file. It creates 16x16 and 32x32 icons based on your image
+    CreateIcon {
+        /// Set file path to open image
         #[arg(long)]
         openfilepath: String,
-        /// Save image to directory
+        /// Set directory path to save multiple images
         #[arg(long)]
         savedirectory: String,
-        /// File name to prefix
+        /// File name to prefix. No file extension required. Default file extension is ico
+        #[arg(long)]
+        savefilename: String,
+    },
+    /// Format your image as a different image.
+    FormatImage {
+        /// Set file path to open image
+        #[arg(long)]
+        openfilepath: String,
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+        /// Set image type to save image as.  Available image types: bmp, jpg/jpeg, gif, png, tiff, tga, avif, webp
+        #[arg(long)]
+        imagetype: String
+    },
+    /// Basic Gradient
+    Gradient {
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+        /// Set image width
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Set image height
+        #[arg(long, default_value_t = 100)]
+        height: u32,
+        /// Set transparency multipler for your reds, greens, and blues. Used as a part of a formula
+        #[arg(long, default_value_t = 0.5)]
+        transparency: f32
+    },
+    /// Create gradient with blocks of colours. Each quarter has a colour
+    GradientBlock {
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+        /// Set image width
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Set image height
+        #[arg(long, default_value_t = 100)]
+        height: u32
+    },
+    /// Create gradient with RGB and alpha
+    GradientRgba {
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+        /// Set image width
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Set image height
+        #[arg(long, default_value_t = 100)]
+        height: u32,
+        /// Set Red value. Default axis is x
+        #[arg(long, default_value_t = 0)]
+        red: u32,
+        /// Set Green value. Default axis is x
+        #[arg(long, default_value_t = 0)]
+        green: u32,
+        /// Set Blue value. Default axis is y
+        #[arg(long, default_value_t = 0)]
+        blue: u32,
+        /// Set Alpha value
+        #[arg(long, default_value_t = 255)]
+        alpha: u8,
+        /// Use y axis for Red colour to update pixel.
+        #[arg(long, default_value_t = false)]
+        redy: std::primitive::bool,
+        /// Use y axis for Green colour to update pixel.
+        #[arg(long, default_value_t = false)]
+        greeny:  std::primitive::bool,
+        /// Use y axis for Blue colour to update pixel.
+        #[arg(long, default_value_t = true)]
+        bluey:  std::primitive::bool,
+    },
+    /// Create gradient with random values for RGB and alpha
+    GradientRandom {
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+        /// Set image width
+        #[arg(long, default_value_t = 100)]
+        width: u32,
+        /// Set image height
+        #[arg(long, default_value_t = 100)]
+        height: u32
+    },
+    /// Cuts images into grid cells. Calculates cell size evenly by dividing width/height by columns/rows set
+    Grid {
+        /// Set file path to open image
+        #[arg(long)]
+        openfilepath: String,
+        /// Set directory path to save multiple images
+        #[arg(long)]
+        savedirectory: String,
+        /// Set file name to prefix multiple images
         #[arg(long)]
         savefilename: String,
         /// Number of rows to split image into
@@ -33,119 +130,33 @@ enum Commands {
         #[arg(long, default_value_t = 0)]
         columns: u32
     },
-    WriteToFile {
-        #[arg(long)]
-        filepath: String,
-        #[arg(long)]
-        content: String,
-    },
+    /// Get image details. Retrieves width, height, and colour type.
     ImageDetails {
+        /// Set file path to open image
         #[arg(long)]
         filepath: String
     },
-    Gradient {
-        #[arg(long)]
-        savefilepath: String,
-        /// Number of rows to split image into
-        #[arg(long, default_value_t = 100)]
-        width: u32,
-        /// Number of columns to split image into
-        #[arg(long, default_value_t = 100)]
-        height: u32,
-        #[arg(long, default_value_t = 0.5)]
-        transparency: f32
-    },
-    FormatImage {
-        /// Open image filepath
-        #[arg(long)]
-        openfilepath: String,
-        /// Save image filepath
-        #[arg(long)]
-        savefilepath: String,
-        // Set image type to save as
-        #[arg(long)]
-        imagetype: String
-    },
-    CreateIcon {
-        /// Open image Filepath
-        #[arg(long)]
-        openfilepath: String,
-        /// Save image to directory
-        #[arg(long)]
-        savedirectory: String,
-        /// File name to prefix. No extension required
-        #[arg(long)]
-        savefilename: String,
-    },
-    /// Create gradient with RGB and alpha
-    GradientRgba {
-        /// Save file path for image
-        #[arg(long)]
-        savefilepath: String,
-        /// Number of rows to split image into
-        #[arg(long, default_value_t = 100)]
-        width: u32,
-        /// Number of columns to split image into
-        #[arg(long, default_value_t = 100)]
-        height: u32,
-        /// Red value
-        #[arg(long, default_value_t = 0)]
-        red: u32,
-        /// Green value
-        #[arg(long, default_value_t = 0)]
-        green: u32,
-        /// Blue value
-        #[arg(long, default_value_t = 0)]
-        blue: u32,
-        /// Alpha value
-        #[arg(long, default_value_t = 255)]
-        alpha: u8,
-        /// Use y axis for Red colour to update pixel. Default is false
-        #[arg(long, default_value_t = false)]
-        redy: std::primitive::bool,
-        /// Use y axis for Green colour to update pixel. Default is false
-        #[arg(long, default_value_t = false)]
-        greeny:  std::primitive::bool,
-        /// Use y axis for Blue colour to update pixel. Default is true
-        #[arg(long, default_value_t = true)]
-        bluey:  std::primitive::bool,
-    },
-    /// Create gradient with random values for RGB and alpha
-    GradientRandom {
-        /// Save file path for image
-        #[arg(long)]
-        savefilepath: String,
-        /// Number of rows to split image into
-        #[arg(long, default_value_t = 100)]
-        width: u32,
-        /// Number of columns to split image into
-        #[arg(long, default_value_t = 100)]
-        height: u32
-    },
-    /// Create gradient with blocks of colours
-    GradientBlock {
-        /// Save file path for image
-        #[arg(long)]
-        savefilepath: String,
-        /// Number of rows to split image into
-        #[arg(long, default_value_t = 100)]
-        width: u32,
-        /// Number of columns to split image into
-        #[arg(long, default_value_t = 100)]
-        height: u32
-    },
     /// Custom. WIP
     MiscCustom {
-        /// Save file path for image
+        /// Set file path to save image
         #[arg(long)]
         savefilepath: String,
-        /// Number of rows to split image into
+        /// Set image width
         #[arg(long, default_value_t = 100)]
         width: u32,
-        /// Number of columns to split image into
+        /// Set image height
         #[arg(long, default_value_t = 100)]
         height: u32
-    }
+    },
+    /// Write content to file. It does not append content to existing files.
+    WriteToFile {
+        /// Set file path to save image
+        #[arg(long)]
+        filepath: String,
+        /// Set content to write to file.
+        #[arg(long)]
+        content: String,
+    },
 }
 
 fn main() {
