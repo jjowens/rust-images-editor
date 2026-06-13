@@ -1,6 +1,9 @@
+
 #[cfg(test)]
 mod createicon_test {
     use assert_cmd::Command;
+    use crate::common_settings.get_app_name;
+
     const APP_NAME: &str = "rustimageseditor";
 
     #[test]
