@@ -5,3 +5,4 @@ pub mod writetofile_service;
 pub mod formatimage_service;
 pub mod createicon_service;
 pub mod misc_service;
+pub mod helper;

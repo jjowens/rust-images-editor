@@ -5,7 +5,7 @@ use rustimageseditor::services::imagedetails_service::imagedetails_service;
 use rustimageseditor::services::writetofile_service::writetofile_service;
 use rustimageseditor::services::createicon_service::createicon_service;
 use rustimageseditor::services::gradient_service::{gradientrandom_service, gradient_service, gradientblock_service, gradientrgba_service};
-use rustimageseditor::services::misc_service::misc_custom_service;
+use rustimageseditor::services::misc_service::{misc_custom_service, misc_square_centered};
 
 #[derive(Parser)]
 #[command(name = "myapp", author, version, about, long_about = None)]
@@ -148,6 +148,23 @@ enum Commands {
         #[arg(long, default_value_t = 100)]
         height: u32
     },
+    /// Misc. Create a square position in centre of square
+    MiscSquareCentered {
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+        /// Set image width
+        #[arg(long, default_value_t = 100)]
+        imagewidth: u32,
+        /// Set image height
+        #[arg(long, default_value_t = 100)]
+        imageheight: u32,
+        #[arg(long, default_value_t = 50)]
+        squarewidth: u32,
+        /// Set image height
+        #[arg(long, default_value_t = 50)]
+        squareheight: u32
+    },
     /// Write content to file. It does not append content to existing files.
     WriteToFile {
         /// Set file path to save image
@@ -195,6 +212,9 @@ fn main() {
         },
         Some(Commands::MiscCustom { savefilepath, width, height }) => {
             misc_custom_service(savefilepath.as_str(), width, height);
+        },
+        Some(Commands::MiscSquareCentered { savefilepath, imagewidth, imageheight, squarewidth, squareheight }) => {
+            misc_square_centered(savefilepath.as_str(), imagewidth, imageheight,   squarewidth, squareheight);
         },
         None => {
             std::process::exit(1);
