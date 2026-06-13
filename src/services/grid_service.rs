@@ -1,7 +1,7 @@
 use image::{GenericImage, ImageFormat};
 use image::flat::Error;
 
-pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, rows: u32, columns: u32) {
+pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, rows: u32, columns: u32)  -> Result<(), String>{
     println!("- Creating grid image");
     let mut img = image::open(open_file_path).unwrap();
 
@@ -53,6 +53,8 @@ pub fn grid_service(open_file_path: &str, save_dir: &str, save_file_name: &str, 
         }
     }
     //img.sub_image(0,90, grid_cell_width,grid_cell_height).to_image().save_with_format(save_file_path, ImageFormat::Png).unwrap()
+
+    Ok(())
 }
 
 pub fn get_final_size(current_position: u32, cell_size: u32, full_size: u32) -> u32 {

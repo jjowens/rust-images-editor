@@ -1,7 +1,7 @@
 use image::{ImageFormat};
 use image::imageops::FilterType;
 
-pub fn formatimage_service(open_file_path: &str, save_file_path: &str, image_type: &str) {
+pub fn formatimage_service(open_file_path: &str, save_file_path: &str, image_type: &str)  -> Result<(), String> {
     println!("- Get {} image", open_file_path);
     println!("- Saving {} image as {}", save_file_path, image_type);
 
@@ -27,4 +27,6 @@ pub fn formatimage_service(open_file_path: &str, save_file_path: &str, image_typ
     } else {
         img.save_with_format(save_file_path, image_file_type).unwrap();
     }
+
+    Ok(())
 }
