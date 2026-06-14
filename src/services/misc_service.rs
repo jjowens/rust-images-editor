@@ -1,4 +1,4 @@
-use crate::services::helper::{create_centered_square, get_centred_point};
+use crate::services::helper::{create_centered_square};
 
 pub fn misc_custom_service(save_file_path: &str, width: u32, height: u32) -> Result<(), String> {
     // let mut imgbuf = image::ImageBuffer::new(width, height);

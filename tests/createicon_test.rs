@@ -4,7 +4,7 @@ mod createicon_test {
     const APP_NAME: &str = "rustimageseditor";
 
     #[test]
-    fn create_icon() -> Result<(), Box<dyn std::error::Error>> {
+    fn create_icon() {
         let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
 
         cmd.arg("create-icon")
@@ -12,8 +12,6 @@ mod createicon_test {
             .arg("--savedirectory").arg("test-output")
             .arg("--savefilename").arg("dog_icon_");
 
-        let _output = cmd.unwrap();
-
-        Ok(())
+        let output = cmd.unwrap();
     }
 }
