@@ -176,18 +176,18 @@ enum Commands {
     },
 }
 
-fn main() {
+fn main() -> Result<(), String> {
     println!("Images Editor");
 
     let args = Args::parse();
 
     match args.command {
         Some(Commands::Grid { openfilepath, savedirectory, savefilename, rows, columns }) => {
-            grid_service(&openfilepath, &savedirectory, &savefilename, rows, columns);
+            grid_service(&openfilepath, &savedirectory, &savefilename, rows, columns)
         },
         Some(Commands::WriteToFile { filepath, content }) => {
             println!("Writing to file");
-            let _ = writetofile_service(filepath, content);
+            writetofile_service(filepath, content)
         },
         Some(Commands::ImageDetails { filepath }) => {
             imagedetails_service(&filepath)
@@ -196,28 +196,28 @@ fn main() {
             gradient_service(savefilepath.as_str(), width, height, transparency)
         },
         Some(Commands::FormatImage { openfilepath, savefilepath, imagetype }) => {
-            formatimage_service(&openfilepath, &savefilepath, &imagetype);
+            formatimage_service(&openfilepath, &savefilepath, &imagetype)
         },
         Some(Commands::CreateIcon { openfilepath, savedirectory, savefilename }) => {
-            createicon_service(&openfilepath, &savedirectory, &savefilename);
+            createicon_service(&openfilepath, &savedirectory, &savefilename)
         },
         Some(Commands::GradientRgba { savefilepath, width, height, red, green, blue, alpha , redy   , greeny, bluey }) => {
-            gradientrgba_service(savefilepath.as_str(), width, height, red, green, blue, alpha, redy, greeny, bluey);
+            gradientrgba_service(savefilepath.as_str(), width, height, red, green, blue, alpha, redy, greeny, bluey)
         },
         Some(Commands::GradientRandom { savefilepath, width, height }) => {
-            gradientrandom_service(savefilepath.as_str(), width, height);
+            gradientrandom_service(savefilepath.as_str(), width, height)
         },
         Some(Commands::GradientBlock { savefilepath, width, height }) => {
-            gradientblock_service(savefilepath.as_str(), width, height);
+            gradientblock_service(savefilepath.as_str(), width, height)
         },
         Some(Commands::MiscCustom { savefilepath, width, height }) => {
-            misc_custom_service(savefilepath.as_str(), width, height);
+            misc_custom_service(savefilepath.as_str(), width, height)
         },
         Some(Commands::MiscSquareCentered { savefilepath, imagewidth, imageheight, squarewidth, squareheight }) => {
-            misc_square_centered(savefilepath.as_str(), imagewidth, imageheight,   squarewidth, squareheight);
+            misc_square_centered(savefilepath.as_str(), imagewidth, imageheight,   squarewidth, squareheight)
         },
         None => {
-            std::process::exit(1);
+            Err(String::from("no command given"))
         }
     }
 }

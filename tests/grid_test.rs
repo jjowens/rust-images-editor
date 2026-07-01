@@ -15,8 +15,8 @@ mod grid_test {
         Ok(())
     }
 
-    fn create_grid_image(rows: &str, columns: &str, open_file_path: &str, save_directory_path: &str, save_file_name: &str) -> Result<(), Box<dyn std::error::Error>> {
-        let _ = recreate_folder(save_directory_path);
+    fn create_grid_image(rows: &str, columns: &str, open_file_path: &str, save_directory_path: &str, save_file_name: &str) -> Result<(), String> {
+        let output = recreate_folder(save_directory_path);
         let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
 
         cmd.arg("grid")
@@ -26,29 +26,24 @@ mod grid_test {
             .arg("--savedirectory").arg(save_directory_path)
             .arg("--savefilename").arg(save_file_name);
 
-        let _output = cmd.unwrap();
+        let output = cmd.unwrap();
 
         Ok(())
     }
 
     #[test]
-    fn should_create_2x2() -> Result<(), Box<dyn std::error::Error>> {
-        let _ = create_grid_image("2", "2", "test-images/dog1.png", "test-output/grid/2x2", "dog2x2");
+    fn should_create_2x2() {
+        let output = create_grid_image("2", "2", "test-images/dog1.png", "test-output/grid/2x2", "dog2x2");
 
-        Ok(())
     }
 
     #[test]
-    fn create_10x1() -> Result<(), Box<dyn std::error::Error>> {
-        let _ = create_grid_image("10", "1", "test-images/dog1.png", "test-output/grid/10x1", "dog10x1");
-
-        Ok(())
+    fn create_10x1() {
+        let output =create_grid_image("10", "1", "test-images/dog1.png", "test-output/grid/10x1", "dog10x1");
     }
 
     #[test]
-    fn create_20x20() -> Result<(), Box<dyn std::error::Error>> {
-        let _ = create_grid_image("20", "20", "test-images/dog1.png", "test-output/grid/20x20", "dog20x20");
-
-        Ok(())
+    fn create_20x20() {
+        let output = create_grid_image("20", "20", "test-images/dog1.png", "test-output/grid/20x20", "dog20x20");
     }
 }

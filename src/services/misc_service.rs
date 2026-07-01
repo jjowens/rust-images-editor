@@ -1,6 +1,6 @@
-use crate::services::helper::{create_centered_square, get_centred_point};
+use crate::services::helper::{create_centered_square};
 
-pub fn misc_custom_service(save_file_path: &str, width: u32, height: u32) {
+pub fn misc_custom_service(save_file_path: &str, width: u32, height: u32) -> Result<(), String> {
     // let mut imgbuf = image::ImageBuffer::new(width, height);
 
     let mut imgbuf = image::ImageBuffer::<image::Rgb<u8>, _>::new(width, height);
@@ -41,9 +41,11 @@ pub fn misc_custom_service(save_file_path: &str, width: u32, height: u32) {
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
+
+    Ok(())
 }
 
-pub fn misc_custom_square_service(save_file_path: &str, width: u32, height: u32) {
+pub fn misc_custom_square_service(save_file_path: &str, width: u32, height: u32) -> Result<(), String> {
 
     let mut imgbuf = image::ImageBuffer::<image::Rgb<u8>, _>::new(width, height);
 
@@ -71,9 +73,11 @@ pub fn misc_custom_square_service(save_file_path: &str, width: u32, height: u32)
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
+
+    Ok(())
 }
 
-pub fn misc_square_centered(save_file_path: &str, image_width: u32, image_height: u32,  square_width: u32, square_height: u32) {
+pub fn misc_square_centered(save_file_path: &str, image_width: u32, image_height: u32,  square_width: u32, square_height: u32) -> Result<(), String> {
 
     let mut imgbuf = image::ImageBuffer::<image::Rgb<u8>, _>::new(image_width, image_height);
 
@@ -96,4 +100,6 @@ pub fn misc_square_centered(save_file_path: &str, image_width: u32, image_height
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
+
+    Ok(())
 }

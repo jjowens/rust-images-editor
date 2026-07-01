@@ -4,7 +4,7 @@ mod misc_test {
     const APP_NAME: &str = "rustimageseditor";
 
     #[test]
-    fn custom_image() -> Result<(), Box<dyn std::error::Error>> {
+    fn custom_image() {
         let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
 
         cmd.arg("misc-custom")
@@ -12,13 +12,11 @@ mod misc_test {
             .arg("--width").arg("100")
             .arg("--height").arg("100");
 
-        let _output = cmd.unwrap();
-
-        Ok(())
+        let output = cmd.unwrap();
     }
 
     #[test]
-    fn custom_square_centered() -> Result<(), Box<dyn std::error::Error>> {
+    fn custom_square_centered() {
         let mut cmd = Command::cargo_bin(APP_NAME).unwrap();
 
         cmd.arg("misc-square-centered")
@@ -28,11 +26,10 @@ mod misc_test {
             .arg("--squarewidth").arg("10")
             .arg("--squareheight").arg("10");
 
-        let _output = cmd.unwrap();
+        let output = cmd.unwrap();
 
         // misc-square-centered --savefilepath test-output/misc/custom_centred.png --imagewidth 100 --imageheight 100 --squarewidth 10 --squareheight 10
 
-        Ok(())
     }
 
 }

@@ -1,6 +1,6 @@
 use rand::random_range;
 
-pub fn gradient_service(save_file_path: &str, width: u32, height: u32, transparency: f32) {
+pub fn gradient_service(save_file_path: &str, width: u32, height: u32, transparency: f32)  -> Result<(), String> {
     let mut imgbuf = image::ImageBuffer::new(width, height);
 
     // Iterate over the coordinates and pixels of the image
@@ -14,9 +14,20 @@ pub fn gradient_service(save_file_path: &str, width: u32, height: u32, transpare
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
+
+    Ok(())
 }
 
-pub fn gradientrgba_service(save_file_path: &str, width: u32, height: u32, red: u32, green: u32, blue: u32, alpha: u8, red_y: bool, green_y:bool, blue_y: bool) {
+pub fn gradientrgba_service(save_file_path: &str,
+                            width: u32,
+                            height: u32,
+                            red: u32,
+                            green: u32,
+                            blue: u32,
+                            alpha: u8,
+                            red_y: bool,
+                            green_y:bool,
+                            blue_y: bool)  -> Result<(), String> {
     let mut imgbuf = image::ImageBuffer::new(width, height);
 
     // Iterate over the coordinates and pixels of the image
@@ -42,9 +53,11 @@ pub fn gradientrgba_service(save_file_path: &str, width: u32, height: u32, red: 
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
+
+    Ok(())
 }
 
-pub fn gradientrandom_service(save_file_path: &str, width: u32, height: u32) {
+pub fn gradientrandom_service(save_file_path: &str, width: u32, height: u32) -> Result<(), String> {
     let mut imgbuf = image::ImageBuffer::new(width, height);
 
     // Iterate over the coordinates and pixels of the image
@@ -59,9 +72,11 @@ pub fn gradientrandom_service(save_file_path: &str, width: u32, height: u32) {
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
+
+    Ok(())
 }
 
-pub fn gradientblock_service(save_file_path: &str, width: u32, height: u32) {
+pub fn gradientblock_service(save_file_path: &str, width: u32, height: u32) -> Result<(), String> {
     let mut imgbuf = image::ImageBuffer::new(width, height);
 
     let x_half = width / 2;
@@ -96,4 +111,6 @@ pub fn gradientblock_service(save_file_path: &str, width: u32, height: u32) {
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(save_file_path).unwrap();
+
+    Ok(())
 }
