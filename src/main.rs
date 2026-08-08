@@ -6,6 +6,7 @@ use rustimageseditor::services::writetofile_service::writetofile_service;
 use rustimageseditor::services::createicon_service::createicon_service;
 use rustimageseditor::services::gradient_service::{gradientrandom_service, gradient_service, gradientblock_service, gradientrgba_service};
 use rustimageseditor::services::misc_service::{misc_custom_service, misc_square_centered};
+use rustimageseditor::services::split_image_service::{hue_rotate, split_image_service, adjust_contrast};
 
 #[derive(Parser)]
 #[command(name = "myapp", author, version, about, long_about = None)]
@@ -16,6 +17,18 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Commands {
+    /// Add contrast to your image
+    Contrast {
+        /// Set file path to open image
+        #[arg(long)]
+        openfilepath: String,
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+        /// Set Contrast value. Floating point type e.g. 1.0, 2.5
+        #[arg(long, default_value_t = 1.0)]
+        contrast: f32,
+    },
     /// Create an icon file. It creates 16x16 and 32x32 icons based on your image
     CreateIcon {
         /// Set file path to open image
@@ -130,6 +143,18 @@ enum Commands {
         #[arg(long, default_value_t = 0)]
         columns: u32
     },
+    /// Create an icon file. It creates 16x16 and 32x32 icons based on your image
+    HueRotate {
+        /// Set file path to open image
+        #[arg(long)]
+        openfilepath: String,
+        /// File name to prefix. No file extension required. Default file extension is ico
+        #[arg(long)]
+        savefilename: String,
+        /// Rotate
+        #[arg(long, default_value_t = 180)]
+        rotate: i32,
+    },
     /// Get image details. Retrieves width, height, and colour type.
     ImageDetails {
         /// Set file path to open image
@@ -164,6 +189,15 @@ enum Commands {
         /// Set image height
         #[arg(long, default_value_t = 50)]
         squareheight: u32
+    },
+    /// Split image into channel images
+    SplitImage {
+        /// Set file path to open image
+        #[arg(long)]
+        openfilepath: String,
+        /// Set directory path to save multiple images
+        #[arg(long)]
+        savefilename: String,
     },
     /// Write content to file. It does not append content to existing files.
     WriteToFile {
@@ -215,6 +249,15 @@ fn main() -> Result<(), String> {
         },
         Some(Commands::MiscSquareCentered { savefilepath, imagewidth, imageheight, squarewidth, squareheight }) => {
             misc_square_centered(savefilepath.as_str(), imagewidth, imageheight,   squarewidth, squareheight)
+        },
+        Some(Commands::SplitImage { openfilepath, savefilename }) => {
+            split_image_service(&openfilepath, &savefilename)
+        },
+        Some(Commands::HueRotate { openfilepath, savefilename, rotate }) => {
+            hue_rotate(&openfilepath, &savefilename, rotate)
+        },
+        Some(Commands::Contrast { openfilepath, savefilepath, contrast }) => {
+            adjust_contrast(&openfilepath, &savefilepath, contrast)
         },
         None => {
             Err(String::from("no command given"))

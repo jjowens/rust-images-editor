@@ -14,5 +14,7 @@ pub fn createicon_service(open_file_path: &str, save_dir_path: &str, savefilenam
 
     img.resize_exact(16,16, FilterType::Gaussian).save_with_format(save_16x16_filepath, ImageFormat::Ico).unwrap();
 
+    img.
+
     Ok(())
 }
