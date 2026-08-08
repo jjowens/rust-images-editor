@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use rustimageseditor::services::colourspacedetails_service::colourspace_service;
 use rustimageseditor::services::formatimage_service::formatimage_service;
 use rustimageseditor::services::grid_service::grid_service;
 use rustimageseditor::services::imagedetails_service::imagedetails_service;
@@ -136,6 +137,12 @@ enum Commands {
         #[arg(long)]
         filepath: String
     },
+    /// Get colour space details
+    ColourSpaceDetails {
+        /// Set file path to open image
+        #[arg(long)]
+        filepath: String
+    },
     /// Custom. WIP
     MiscCustom {
         /// Set file path to save image
@@ -215,6 +222,9 @@ fn main() -> Result<(), String> {
         },
         Some(Commands::MiscSquareCentered { savefilepath, imagewidth, imageheight, squarewidth, squareheight }) => {
             misc_square_centered(savefilepath.as_str(), imagewidth, imageheight,   squarewidth, squareheight)
+        },
+        Some(Commands::ColourSpaceDetails { filepath }) => {
+            colourspace_service(&filepath)
         },
         None => {
             Err(String::from("no command given"))
