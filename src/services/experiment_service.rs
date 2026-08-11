@@ -31,14 +31,17 @@ pub fn experiment_warhol_service(open_file_path: String, save_file_path: String,
 
     let mut img = image::open(open_file_path).unwrap();
 
-    img = update_image(img, 5);
-    canvas.copy_from(&img.to_rgb8(), 0, 0);
-    img =  update_image(img, 100);
-    canvas.copy_from(&img.to_rgb8(), 425, 0);
-    img =  update_image(img, 230);
-    canvas.copy_from(&img.to_rgb8(), 0, 290);
-    img =  update_image(img, 353);
-    canvas.copy_from(&img.to_rgb8(), 425, 290);
+    let img1 = update_image(img.clone(), 5);
+    canvas.copy_from(&img1.to_rgb8(), 0, 0);
+
+    let img2 =  update_image(img.clone(), 100);
+    canvas.copy_from(&img2.to_rgb8(), 425, 0);
+
+    let img3 =  update_image(img.clone(), 230);
+    canvas.copy_from(&img3.to_rgb8(), 0, 290);
+
+    let img4 =  update_image(img.clone(), 300);
+    canvas.copy_from(&img4.to_rgb8(), 425, 290);
 
     let _ = canvas.save(save_file_path).unwrap();
 
