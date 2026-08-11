@@ -7,3 +7,4 @@ pub mod createicon_service;
 pub mod misc_service;
 pub mod helper;
 pub mod colourspacedetails_service;
+pub mod experiment_service;
