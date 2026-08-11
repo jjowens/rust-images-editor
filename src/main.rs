@@ -5,6 +5,7 @@ use rustimageseditor::services::grid_service::grid_service;
 use rustimageseditor::services::imagedetails_service::imagedetails_service;
 use rustimageseditor::services::writetofile_service::writetofile_service;
 use rustimageseditor::services::createicon_service::createicon_service;
+use rustimageseditor::services::experiment_service::{experiment_service, experiment_subimage_service};
 use rustimageseditor::services::gradient_service::{gradientrandom_service, gradient_service, gradientblock_service, gradientrgba_service};
 use rustimageseditor::services::misc_service::{misc_custom_service, misc_square_centered};
 
@@ -181,6 +182,24 @@ enum Commands {
         #[arg(long)]
         content: String,
     },
+    /// Get colour space details
+    Experiment {
+        /// Set file path to open image
+        #[arg(long)]
+        openfilepath: String,
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+    },
+    /// SubImage
+    ExperimentSubimage {
+        /// Set file path to open image
+        #[arg(long)]
+        openfilepath: String,
+        /// Set file path to save image
+        #[arg(long)]
+        savefilepath: String,
+    },
 }
 
 fn main() -> Result<(), String> {
@@ -225,6 +244,12 @@ fn main() -> Result<(), String> {
         },
         Some(Commands::ColourSpaceDetails { filepath }) => {
             colourspace_service(&filepath)
+        },
+        Some(Commands::Experiment { openfilepath, savefilepath }) => {
+            experiment_service(openfilepath, savefilepath)
+        },
+        Some(Commands::ExperimentSubimage { openfilepath, savefilepath }) => {
+            experiment_subimage_service(openfilepath, savefilepath)
         },
         None => {
             Err(String::from("no command given"))
