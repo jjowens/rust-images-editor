@@ -10,8 +10,6 @@ pub fn colourspace_service(filepath: &str) -> Result<(), String> {
     println!("matrix {:?}", img.color_space().matrix);
     println!("primaries {:?}", img.color_space().primaries);
 
-    img.
-
     img.save(filepath).unwrap();
 
     Ok(())
