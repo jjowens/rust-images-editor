@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod unit_experiment_test {
-    use rustimageseditor::services::experiment_service::{experiment_blinds_effect_service, experiment_huerotate_separate_service, experiment_huerotate_service, experiment_subimage_service, experiment_warhol_service};
+    use rustimageseditor::services::experiment_service::{experiment_blinds_effect_service, experiment_blinds_gradient_service, experiment_huerotate_separate_service, experiment_huerotate_service, experiment_subimage_service, experiment_warhol_service};
 
     #[test]
     fn experiment_subimage_test() {
@@ -50,6 +50,16 @@ mod unit_experiment_test {
         let save_file_path = "test-output/experiment/dog_blinds_effect.png".to_string();
 
         let output = experiment_blinds_effect_service(open_file_path, save_file_path);
+
+        assert!(output.is_ok());
+    }
+
+    #[test]
+    fn experiment_blinds_gradient_effect_test() {
+        let open_file_path = "test-images/experiment/dog1.png".to_string();
+        let save_file_path = "test-output/experiment/dog_blinds_gradient.png".to_string();
+
+        let output = experiment_blinds_gradient_service(open_file_path, save_file_path);
 
         assert!(output.is_ok());
     }

@@ -110,3 +110,33 @@ pub fn experiment_blinds_effect_service(open_file_path: String, save_file_path: 
 
     Ok(())
 }
+
+pub fn experiment_blinds_gradient_service(open_file_path: String, save_file_path: String)  -> Result<(), String> {
+    println!("Blinds experiment with: {}", open_file_path);
+
+    let mut img = image::open(open_file_path).unwrap();
+
+    let mut canvas = image::RgbaImage::new(img.width(), img.height());
+
+    canvas.copy_from(&img.grayscale().to_rgba8(), 0, 0);
+
+    let mut subimage = img.sub_image(0,25, img.width(),10).to_image();
+
+    canvas.copy_from(&subimage, 0, 25);
+
+    subimage = img.sub_image(0,40, img.width(),10).to_image();
+    canvas.copy_from(&subimage, 0, 40);
+
+    subimage = img.sub_image(0,60, img.width(),25).to_image();
+    canvas.copy_from(&subimage, 0, 60);
+
+    subimage = img.sub_image(0,100, img.width(),40).to_image();
+    canvas.copy_from(&subimage, 0, 100);
+
+    subimage = img.sub_image(0,150, img.width(),80).to_image();
+    canvas.copy_from(&subimage, 0, 150);
+
+    canvas.save(save_file_path).unwrap();
+
+    Ok(())
+}
