@@ -1,5 +1,6 @@
 use std::path::Path;
 use image::{DynamicImage, GenericImage, GenericImageView};
+use crate::services::helper::get_blinds_rows;
 
 pub fn experiment_service(open_file_path: String, save_file_path: String) -> Result<(), String> {
     println!("Experiment with: {}", open_file_path);
@@ -124,17 +125,24 @@ pub fn experiment_blinds_gradient_service(open_file_path: String, save_file_path
 
     canvas.copy_from(&subimage, 0, 25);
 
-    subimage = img.sub_image(0,40, img.width(),10).to_image();
-    canvas.copy_from(&subimage, 0, 40);
+    let vecs = get_blinds_rows(img.width(), img.height());
 
-    subimage = img.sub_image(0,60, img.width(),25).to_image();
-    canvas.copy_from(&subimage, 0, 60);
+    for vec in vecs {
+        subimage = img.sub_image(vec.x,vec.y, vec.width,vec.height).to_image();
+       canvas.copy_from(&subimage, vec.x, vec.y).expect("TODO: panic message");
+    }
 
-    subimage = img.sub_image(0,100, img.width(),40).to_image();
-    canvas.copy_from(&subimage, 0, 100);
-
-    subimage = img.sub_image(0,150, img.width(),80).to_image();
-    canvas.copy_from(&subimage, 0, 150);
+    // subimage = img.sub_image(0,40, img.width(),10).to_image();
+    // canvas.copy_from(&subimage, 0, 40);
+    //
+    // subimage = img.sub_image(0,60, img.width(),25).to_image();
+    // canvas.copy_from(&subimage, 0, 60);
+    //
+    // subimage = img.sub_image(0,100, img.width(),40).to_image();
+    // canvas.copy_from(&subimage, 0, 100);
+    //
+    // subimage = img.sub_image(0,150, img.width(),80).to_image();
+    // canvas.copy_from(&subimage, 0, 150);
 
     canvas.save(save_file_path).unwrap();
 

@@ -57,7 +57,12 @@ mod unit_experiment_test {
     #[test]
     fn experiment_blinds_gradient_effect_test() {
         let open_file_path = "test-images/experiment/dog1.png".to_string();
-        let save_file_path = "test-output/experiment/dog_blinds_gradient.png".to_string();
+        let save_file_path = "test-output/experiment/dog1_blinds_gradient.png".to_string();
+
+        let output = experiment_blinds_gradient_service(open_file_path, save_file_path);
+
+        let open_file_path = "test-images/experiment/dog2.png".to_string();
+        let save_file_path = "test-output/experiment/dog2_blinds_gradient.png".to_string();
 
         let output = experiment_blinds_gradient_service(open_file_path, save_file_path);
 

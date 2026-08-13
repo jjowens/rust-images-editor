@@ -1,3 +1,4 @@
+use crate::structs::blind_row::BlindRow;
 use crate::structs::image_pixel::ImagePixel;
 
 /// Create a list of vectors to make a square
@@ -30,4 +31,15 @@ pub fn get_centred_point(image_width: u32, image_height: u32) -> ImagePixel {
     let y_centered = image_height / 2;
 
     ImagePixel::new(x_centered, y_centered)
+}
+
+pub fn get_blinds_rows(image_width: u32, image_height: u32) -> Vec<BlindRow> {
+    let mut vecs  : Vec<BlindRow> = vec![];
+
+    vecs.push(BlindRow::new(0,40, image_width, 10));
+    vecs.push(BlindRow::new(0,60, image_width, 25));
+    vecs.push(BlindRow::new(0,100, image_width, 40));
+    vecs.push(BlindRow::new(0,150, image_width, 80));
+
+    vecs
 }
